@@ -1,0 +1,39 @@
+﻿@model TrafficTicketsSystem1.Models.Camera
+
+@{
+    ViewBag.Title = "Prepare Camera Edit";
+}
+
+<h2 class="maroon common-font text-center bold">Prepare Camera Details Edition</h2>
+
+<hr />
+
+@using (Html.BeginForm("ConfirmEdit", "Cameras", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="large-content">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CameraNumber, htmlAttributes: new { @class = "control-label col-md-4 maroon" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CameraNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CameraNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    <p><input type="submit" value="Find Camera" class="btn btn-warning small-text" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Cameras", "Index") ::
+    @Html.ActionLink("Create New Camera", "Create") ::
+    @Html.ActionLink("Review Camera Details", "Details") ::
+    @Html.ActionLink("Delete/Remove Camera", "PrepareDelete")
+</p>
+

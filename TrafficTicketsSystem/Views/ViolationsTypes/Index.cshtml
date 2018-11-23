@@ -1,0 +1,32 @@
+﻿@model IEnumerable<TrafficTicketsSystem1.Models.ViolationType>
+
+@{
+    ViewBag.Title = "Violations Types";
+}
+
+<h2 class="bold maroon common-font text-center">Violations Types</h2>
+
+<table class="table table-striped common-font">
+    <tr>
+        <th class="text-center maroon">@Html.DisplayNameFor(model => model.ViolationName)</th>
+        <th class="maroon">@Html.DisplayNameFor(model => model.Description)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.ViolationName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+        </tr>
+    }
+</table>
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Create New Violation Type", "Create") ::
+    @Html.ActionLink("Description of a Violation Type", "Details") ::
+    @Html.ActionLink("Edit/Update a Violation Type", "PrepareEdit") ::
+    @Html.ActionLink("Delete a Violation Type", "PrepareDelete")
+</p>

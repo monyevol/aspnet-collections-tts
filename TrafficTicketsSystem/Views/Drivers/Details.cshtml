@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Driver's Details";
+}
+
+@{
+    string strCity = string.Empty;
+    string strState = string.Empty;
+    string strCounty = string.Empty;
+    string strZIPCode = string.Empty;
+    string strAddress = string.Empty;
+    string strLastName = string.Empty;
+    string strFirstName = string.Empty;
+    string strDrvLicNumber = string.Empty;
+
+
+    if (IsPost)
+    {
+        strDrvLicNumber = Request["DrvLicNumber"];
+
+        FileStream fsDrivers = null;
+        string strDriversFile = Server.MapPath("~/App_Data/Drivers.tts");
+        TrafficTicketsSystem1.Models.Driver driver = new TrafficTicketsSystem1.Models.Driver();
+        LinkedList<TrafficTicketsSystem1.Models.Driver> drivers = new LinkedList<TrafficTicketsSystem1.Models.Driver>();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bfDrivers = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+        if (System.IO.File.Exists(strDriversFile))
+        {
+            using (fsDrivers = new FileStream(strDriversFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                drivers = (LinkedList<TrafficTicketsSystem1.Models.Driver>)bfDrivers.Deserialize(fsDrivers);
+            }
+
+            driver.DrvLicNumber = strDrvLicNumber;
+
+            LinkedListNode<TrafficTicketsSystem1.Models.Driver> person = drivers.Find(driver);
+
+            strCity = person.Value.City;
+            strState = person.Value.State;
+            strCounty = person.Value.County;
+            strZIPCode = person.Value.ZIPCode;
+            strAddress = person.Value.Address;
+            strLastName = person.Value.LastName;
+            strFirstName = person.Value.FirstName;
+        }
+    }
+}
+
+<h2 class="common-font bold maroon text-center">Driver's Details</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="containment common-font">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="dln" class="control-label col-md-4 maroon">Drv. Lic. #</label>
+                <div class="col-md-4">
+                    @Html.TextBox("DrvLicNumber", @strDrvLicNumber, htmlAttributes: new { @class = "form-control", id = "dln" })
+                </div>
+                <div class="col-md-4"><input type="submit" value="Find" class="btn btn-warning small-text" /></div>
+            </div>
+            <div class="form-group">
+                <label for="fName" class="small-text maroon col-md-5">First Name</label>
+                <div class="col-md-7">@Html.TextBox("FirstName", @strFirstName, htmlAttributes: new { @class = "form-control", id = "fName" })</div>
+            </div>
+            <div class="form-group">
+                <label for="lName" class="small-text maroon col-md-5">Last Name</label>
+                <div class="col-md-7">@Html.TextBox("LastName", @strLastName, htmlAttributes: new { @class = "form-control", id = "lName" })</div>
+            </div>
+            <div class="form-group">
+                <label for="adrs" class="small-text maroon col-md-5">Address</label>
+                <div class="col-md-7">@Html.TextBox("Address", @strAddress, htmlAttributes: new { @class = "form-control", id = "adrs" })</div>
+            </div>
+            <div class="form-group">
+                <label for="ct" class="small-text maroon col-md-5">City</label>
+                <div class="col-md-7">@Html.TextBox("City", @strCity, htmlAttributes: new { @class = "form-control", id = "ct" })</div>
+            </div>
+            <div class="form-group">
+                <label for="local" class="small-text maroon col-md-5">County</label>
+                <div class="col-md-7">@Html.TextBox("County", @strCounty, htmlAttributes: new { @class = "form-control", id = "local" })</div>
+            </div>
+            <div class="form-group">
+                <label for="government" class="small-text maroon col-md-5">State</label>
+                <div class="col-md-7">@Html.TextBox("State", @strState, htmlAttributes: new { @class = "form-control", id = "government" })</div>
+            </div>
+            <div class="form-group">
+                <label for="zip" class="small-text maroon col-md-5">ZIP Code</label>
+                <div class="col-md-7">@Html.TextBox("ZIPCode", @strZIPCode, htmlAttributes: new { @class = "form-control", id = "zip" })</div>
+            </div>
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Drivers - Vehicles Owners", "Index") ::
+    @Html.ActionLink("Issue New Driver's License", "Create") ::
+    @Html.ActionLink("Edit/Update a Driver's License", "PrepareEdit") ::
+    @Html.ActionLink("Suspend/Delete/Remove a Driver's License", "PrepareDelete")
+</p>

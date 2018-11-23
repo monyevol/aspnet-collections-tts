@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Camera Details";
+}
+
+@{
+    string strMake = string.Empty;
+    string strModel = string.Empty;
+    string strLocation = string.Empty;
+    string strCameraNumber = string.Empty;
+
+    if (IsPost)
+    {
+        strCameraNumber = Request["CameraNumber"];
+
+        FileStream fsCameras = null;
+        string strCamerasFile = Server.MapPath("~/App_Data/Cameras.tts");
+        TrafficTicketsSystem1.Models.Camera camera = new TrafficTicketsSystem1.Models.Camera();
+        LinkedList<TrafficTicketsSystem1.Models.Camera> cameras = new LinkedList<TrafficTicketsSystem1.Models.Camera>();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bfCameras = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+        if (System.IO.File.Exists(strCamerasFile))
+        {
+            using (fsCameras = new FileStream(strCamerasFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                cameras = (LinkedList<TrafficTicketsSystem1.Models.Camera>)bfCameras.Deserialize(fsCameras);
+            }
+
+            camera.CameraNumber = strCameraNumber;
+
+            LinkedListNode<TrafficTicketsSystem1.Models.Camera> viewer = cameras.FindLast(camera);
+            strMake = viewer.Value.Make;
+            strModel = viewer.Value.Model;
+            strLocation = viewer.Value.Location;
+        }
+    }
+}
+
+<h2 class="common-font bold maroon text-center">Camera Details</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+<div class="containment">
+    <div class="small-content common-font">
+        <table>
+            <tr>
+                <td class="small-text bold maroon">Camera #</td>
+                <td>@Html.TextBox("CameraNumber", @strCameraNumber, htmlAttributes: new { @class = "form-control small-text" })</td>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Find" class="btn btn-warning small-text" /></td>
+            </tr>
+        </table>
+        <br />
+        <table>
+            <tr>
+                <td class="small-text maroon bold">Make</td>
+                <td>@Html.TextBox("Make", @strMake, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">Model</td>
+                <td>@Html.TextBox("Model", @strModel, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">Location</td>
+                <td>@Html.TextBox("Location", @strLocation, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+        </table>
+    </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Cameras", "Index") ::
+    @Html.ActionLink("Edit/Update Camera Details", "PrepareEdit") ::
+    @Html.ActionLink("Create New Camera", "Create") ::
+    @Html.ActionLink("Delete/Remove a Cameras", "PrepareDelete")</p>

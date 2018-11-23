@@ -1,0 +1,39 @@
+﻿@model TrafficTicketsSystem1.Models.ViolationType
+
+@{
+    ViewBag.Title = "Prepare Violation Type Edit";
+}
+
+<h2 class="maroon common-font text-center bold">Prepare Violation Type Edition</h2>
+
+<hr />
+
+@using (Html.BeginForm("ConfirmEdit", "ViolationsTypes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="large-content">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ViolationName, htmlAttributes: new { @class = "control-label col-md-4 maroon" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ViolationName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ViolationName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    <p><input type="submit" value="Find Violation Type" class="btn btn-warning" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Violations Types", "Index") ::
+    @Html.ActionLink("Create New Violation Type", "Create") ::
+    @Html.ActionLink("Delete/Remove Violation Type", "PrepareDelete") ::
+    @Html.ActionLink("Edit/Update Violation Type Definition", "PrepareEdit")
+</p>
+

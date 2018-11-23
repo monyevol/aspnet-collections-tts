@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Violation Type Edition";
+}
+
+<h2 class="maroon common-font text-center bold">Confirm Violation Type Edition</h2>
+
+<hr />
+
+@using (Html.BeginForm("Edit", "ViolationsTypes", FormMethod.Post))
+{
+    <div class="common-font large-content">
+        <table>
+            <tr>
+                <td class="small-text bold maroon">Violation Name</td>
+                <td>@Html.TextBox("ViolationName", @ViewBag.ViolationName as string, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="maroon small-text bold">Description</td>
+                <td>@Html.TextArea("Description", @ViewBag.Description as string, htmlAttributes: new { @class = "form-control", rows = "10", cols = "50" })</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr />
+
+    <p class="text-center"><input type="submit" value="Save Camera Record" class="btn btn-warning" /></p>
+    <div class="form-group">
+        <label class="col-md-6 control-label"></label>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Violations Types", "Index") ::
+    @Html.ActionLink("Create New Violation Type", "Create") ::
+    @Html.ActionLink("Review Violation Type Definition", "Details") ::
+    @Html.ActionLink("Delete/Remove Violation Type", "PrepareDelete")
+</p>

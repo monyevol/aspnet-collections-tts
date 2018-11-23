@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Vehicle Details";
+
+    string strTagNumber    = string.Empty;
+    string strState        = string.Empty;
+    string strMake         = string.Empty;
+    string strModel        = string.Empty;
+    string strVehicleYear  = string.Empty;
+    string strColor        = string.Empty;
+    string strDrvLicNumber = string.Empty;
+
+    if (IsPost)
+    {
+        strTagNumber = Request["TagNumber"];
+
+        FileStream fsVehicles = null;
+        string strVehiclesFile = Server.MapPath("~/App_Data/Vehicles.tts");
+        TrafficTicketsSystem1.Models.Vehicle car = new TrafficTicketsSystem1.Models.Vehicle();
+        LinkedList<TrafficTicketsSystem1.Models.Vehicle> vehicles = new LinkedList<TrafficTicketsSystem1.Models.Vehicle>();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bfVehicles = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+        if (System.IO.File.Exists(strVehiclesFile))
+        {
+            using (fsVehicles = new FileStream(strVehiclesFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                vehicles = (LinkedList<TrafficTicketsSystem1.Models.Vehicle>)bfVehicles.Deserialize(fsVehicles);
+            }
+
+            car.TagNumber = strTagNumber;
+
+            LinkedListNode<TrafficTicketsSystem1.Models.Vehicle> node = vehicles.FindLast(car);
+
+            strTagNumber = node.Value.TagNumber;
+            strDrvLicNumber = node.Value.DrvLicNumber;
+            strMake = node.Value.Make;
+            strModel = node.Value.Model;
+            strVehicleYear = node.Value.VehicleYear;
+            strColor = node.Value.Color;
+        }
+    }
+}
+
+<h2 class="common-font bold maroon text-center">Vehicle Details</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="large-content common-font">
+        <table>
+            <tr>
+                <td class="small-text bold maroon">Tag #</td>
+                <td>@Html.TextBox("TagNumber", @strTagNumber, htmlAttributes: new { @class = "form-control small-text" })</td>
+                <td width="20">&nbsp;</td>
+                <td><input type="submit" value="Find" class="btn btn-warning small-text" /></td>
+            </tr>
+        </table>
+        <br />
+        <table>
+            <tr>
+                <td class="small-text maroon bold">Drv. Lic. #</td>
+                <td>@Html.TextBox("DrvLicNumber", @strDrvLicNumber, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">Make</td>
+                <td>@Html.TextBox("Make", @strMake, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">Model</td>
+                <td>@Html.TextBox("Model", @strModel, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">City</td>
+                <td>@Html.TextBox("VehicleYear", @strVehicleYear, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="small-text maroon bold">County</td>
+                <td>@Html.TextBox("Color", @strColor, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+        </table>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Cars - Vehicles", "Index") ::
+    @Html.ActionLink("Issue New Vehicle's License", "Create") ::
+    @Html.ActionLink("Edit/Update a Vehicle's License", "PrepareEdit") ::
+    @Html.ActionLink("Suspend/Delete/Remove a Vehicle's License", "PrepareDelete")
+</p>

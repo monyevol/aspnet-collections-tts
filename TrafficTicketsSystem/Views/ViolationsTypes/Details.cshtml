@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Violation Type Details";
+}
+
+@{
+    string strDescription = "";
+    string strViolationName = string.Empty;
+
+    if (IsPost)
+    {
+        strViolationName = Request["ViolationName"];
+
+        FileStream fsViolationsTypes = null;
+        string strViolationsTypesFile = Server.MapPath("~/App_Data/ViolationsTypes.tts");
+        TrafficTicketsSystem1.Models.ViolationType category = new TrafficTicketsSystem1.Models.ViolationType();
+        LinkedList<TrafficTicketsSystem1.Models.ViolationType> categories = new LinkedList<TrafficTicketsSystem1.Models.ViolationType>();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bfViolationsTypes = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+        if (System.IO.File.Exists(strViolationsTypesFile))
+        {
+            using (fsViolationsTypes = new FileStream(strViolationsTypesFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                categories = (LinkedList<TrafficTicketsSystem1.Models.ViolationType>)bfViolationsTypes.Deserialize(fsViolationsTypes);
+            }
+            category.ViolationName = strViolationName;
+
+            LinkedListNode<TrafficTicketsSystem1.Models.ViolationType> type = categories.Find(category);
+            strDescription = type.Value.Description;
+        }
+    }
+}
+
+<h2 class="common-font bold maroon text-center">Violation Type Details</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="large-content common-font">
+        <table>
+            <tr>
+                <td class="small-text bold maroon">Violation Name</td>
+                <td>@Html.TextBox("ViolationName", @strViolationName, htmlAttributes: new { @class = "form-control small-text" })</td>
+                <td width="20">&nbsp;</td>
+                <td><input type="submit" value="Find" class="btn btn-warning small-text" /></td>
+            </tr>
+        </table>
+        <br />
+        <table>
+            <tr>
+                <td class="small-text maroon bold">Description</td>
+                <td><textarea rows="10" cols="40" class="form-control">@strDescription</textarea></td>
+            </tr>
+        </table>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Violations Types", "Index") ::
+    @Html.ActionLink("Edit/Update Violation Type", "PrepareEdit") ::
+    @Html.ActionLink("Create New Violation Type", "Create") ::
+    @Html.ActionLink("Delete a Violation Type", "PrepareDelete")</p>

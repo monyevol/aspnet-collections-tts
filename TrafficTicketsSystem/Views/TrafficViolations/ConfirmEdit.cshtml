@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Traffic Violation Edit";
+}
+
+<h2 class="common-font bold maroon text-center">Confirm Traffic Violation Edition</h2>
+
+<hr />
+
+@using (Html.BeginForm("Edit", "TrafficViolations", FormMethod.Post))
+{
+    <div class="large-content">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="tvn" class="control-label col-md-5 maroon">Traffic Violation #</label>
+                <div class="col-md-7">
+                    @Html.TextBox("TrafficViolationNumber", @ViewBag.TrafficViolationNumber as string, htmlAttributes: new { @class = "form-control", id = "tvn" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cmrNbr" class="control-label col-md-5 maroon">Camera #</label>
+                <div class="col-md-7">@Html.DropDownList("CameraNumber", @ViewBag.CamerasNumbers as SelectList, htmlAttributes: new { @class = "form-control", id = "cmrNbr" })</div>
+            </div>
+            <div class="form-group">
+                <label for="tagNbr" class="control-label col-md-5 maroon">Tag #</label>
+                <div class="col-md-7">@Html.TextBox("TagNumber", @ViewBag.TagNumber as string, htmlAttributes: new { @class = "form-control", id = "tagNbr" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vType" class="control-label col-md-5 maroon">Violation Type</label>
+                <div class="col-md-7">@Html.DropDownList("ViolationName", @ViewBag.ViolationsNames as SelectList, htmlAttributes: new { @class = "form-control", id = "vType" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vDate" class="control-label col-md-5 maroon">Violation Date</label>
+                <div class="col-md-7">@Html.TextBox("ViolationDate", @ViewBag.ViolationDate as string, htmlAttributes: new { @class = "form-control", id = "vDate" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vTime" class="control-label col-md-5 maroon">Violation Time</label>
+                <div class="col-md-7">@Html.TextBox("ViolationTime", @ViewBag.ViolationTime as string, htmlAttributes: new { @class = "form-control", id = "vTime" })</div>
+            </div>
+            <div class="form-group">
+                <label for="photo" class="control-label col-md-5 maroon">Photo Available</label>
+                <div class="col-md-7">@Html.DropDownList("PhotoAvailable", @ViewBag.PhotosAvailable as SelectList, htmlAttributes: new { @class = "form-control", id = "photo" })</div>
+            </div>
+            <div class="form-group">
+                <label for="video" class="control-label col-md-5 maroon">Video Available</label>
+                <div class="col-md-7">@Html.DropDownList("VideoAvailable", @ViewBag.VideosAvailable as SelectList, htmlAttributes: new { @class = "form-control", id = "video" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pdd" class="control-label col-md-5 maroon">Payment Due Date</label>
+                <div class="col-md-7">@Html.TextBox("PaymentDueDate", @ViewBag.PaymentDueDate as string, htmlAttributes: new { @class = "form-control", id = "pdd" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtDate" class="control-label col-md-5 maroon">Payment Date</label>
+                <div class="col-md-7">@Html.TextBox("PaymentDate", @ViewBag.PaymentDate as string, htmlAttributes: new { @class = "form-control", id = "pmtDate" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtAmount" class="control-label col-md-5 maroon">Payment Amount</label>
+                <div class="col-md-7">@Html.TextBox("PaymentAmount", @ViewBag.PaymentAmount as string, htmlAttributes: new { @class = "form-control", id = "pmtAmount" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtStatus" class="control-label col-md-5 maroon">Payment Status</label>
+                <div class="col-md-7">@Html.DropDownList("PaymentStatus", @ViewBag.PaymentsStatus as SelectList, htmlAttributes: new { @class = "form-control", id = "pmtStatus" })</div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <label class="col-md-6 control-label"></label>
+        <div class="col-md-6">
+            <p><input type="submit" value="Update Traffic Violation" class="btn btn-warning" /></p>
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Traffic Violations", "Index") ::
+    @Html.ActionLink("Process/Create a Traffic Violation", "Create") ::
+    @Html.ActionLink("Edit/Update a Traffic Violation", "PrepareEdit") ::
+    @Html.ActionLink("Delete/Remove a Traffic Violation", "PrepareDelete") ::
+    @Html.ActionLink("Create/Review a Traffic Citation", "Citation")
+</p>

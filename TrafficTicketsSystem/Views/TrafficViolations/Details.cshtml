@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Traffic Violation Details";
+}
+
+@{
+    double dPaymentAmount = 0.00;
+    string strTagNumber = string.Empty;
+    string strPaymentDate = string.Empty;
+    string strCameraNumber = string.Empty;
+    string strPaymentStatus = string.Empty;
+    string strViolationName = string.Empty;
+    string strViolationDate = string.Empty;
+    string strViolationTime = string.Empty;
+    string strPhotoAvailable = string.Empty;
+    string strVideoAvailable = string.Empty;
+    string strPaymentDueDate = string.Empty;
+    string strTrafficViolationNumber = string.Empty;
+
+
+    if (IsPost)
+    {
+        strTrafficViolationNumber = Request["TrafficViolationNumber"];
+
+        FileStream fsTrafficViolations = null;
+        string strTrafficViolationsFile = Server.MapPath("~/App_Data/TrafficViolations.tts");
+        LinkedList<TrafficTicketsSystem1.Models.TrafficViolation> violations = new LinkedList<TrafficTicketsSystem1.Models.TrafficViolation>();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bfTrafficViolations = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+        if (System.IO.File.Exists(strTrafficViolationsFile))
+        {
+            using (fsTrafficViolations = new FileStream(strTrafficViolationsFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                violations = (LinkedList<TrafficTicketsSystem1.Models.TrafficViolation>)bfTrafficViolations.Deserialize(fsTrafficViolations);
+            }
+
+            TrafficTicketsSystem1.Models.TrafficViolation violation = new TrafficTicketsSystem1.Models.TrafficViolation();
+            violation.TrafficViolationNumber = int.Parse(strTrafficViolationNumber);
+
+            LinkedListNode<TrafficTicketsSystem1.Models.TrafficViolation> node = violations.FindLast(violation);
+
+            strTagNumber = node.Value.TagNumber;
+            strPaymentDate = node.Value.PaymentDate;
+            strCameraNumber = node.Value.CameraNumber;
+            strPaymentStatus = node.Value.PaymentStatus;
+            dPaymentAmount = node.Value.PaymentAmount;
+            strViolationName = node.Value.ViolationName;
+            strViolationDate = node.Value.ViolationDate;
+            strViolationTime = node.Value.ViolationTime;
+            strPhotoAvailable = node.Value.PhotoAvailable;
+            strVideoAvailable = node.Value.VideoAvailable;
+            strPaymentDueDate = node.Value.PaymentDueDate;
+        }
+    }
+}
+
+<h2 class="common-font bold maroon text-center">Traffic Violation Details</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="large-content">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="tvn" class="control-label col-md-4 maroon">Traffic Violation #</label>
+                <div class="col-md-4">
+                    @Html.TextBox("TrafficViolationNumber", @strTrafficViolationNumber, htmlAttributes: new { @class = "form-control", id = "tvn" })
+                </div>
+                <div class="col-md-4"><input type="submit" value="Find Traffic Violation" class="btn btn-warning" /></div>
+            </div>
+            <div class="form-group">
+                <label for="cmrNbr" class="control-label col-md-5 maroon">Camera #</label>
+                <div class="col-md-7">@Html.TextBox("CameraNumber", @strCameraNumber, htmlAttributes: new { @class = "form-control", id = "cmrNbr" })</div>
+            </div>
+            <div class="form-group">
+                <label for="tagNbr" class="control-label col-md-5 maroon">Tag #</label>
+                <div class="col-md-7">@Html.TextBox("TagNumber", @strTagNumber, htmlAttributes: new { @class = "form-control", id = "tagNbr" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vType" class="control-label col-md-5 maroon">Violation Type</label>
+                <div class="col-md-7">@Html.TextBox("ViolationName", @strViolationName, htmlAttributes: new { @class = "form-control", id = "vType" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vDate" class="control-label col-md-5 maroon">Violation Date</label>
+                <div class="col-md-7">@Html.TextBox("ViolationDate", @strViolationDate, htmlAttributes: new { @class = "form-control", id = "vDate" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vTime" class="control-label col-md-5 maroon">Violation Time</label>
+                <div class="col-md-7">@Html.TextBox("ViolationTime", @strViolationTime, htmlAttributes: new { @class = "form-control", id = "vTime" })</div>
+            </div>
+            <div class="form-group">
+                <label for="photo" class="control-label col-md-5 maroon">Photo Available</label>
+                <div class="col-md-7">@Html.TextBox("PhotoAvailable", @strPhotoAvailable, htmlAttributes: new { @class = "form-control", id = "photo" })</div>
+            </div>
+            <div class="form-group">
+                <label for="video" class="control-label col-md-5 maroon">Video Available</label>
+                <div class="col-md-7">@Html.TextBox("VideoAvailable", @strVideoAvailable, htmlAttributes: new { @class = "form-control", id = "video" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pdd" class="control-label col-md-5 maroon">Payment Due Date</label>
+                <div class="col-md-7">@Html.TextBox("PaymentDueDate", @strPaymentDueDate, htmlAttributes: new { @class = "form-control", id = "pdd" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtDate" class="control-label col-md-5 maroon">Payment Date</label>
+                <div class="col-md-7">@Html.TextBox("PaymentDate", @strPaymentDate, htmlAttributes: new { @class = "form-control", id = "pmtDate" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtAmount" class="control-label col-md-5 maroon">Payment Amount</label>
+                <div class="col-md-7">@Html.TextBox("PaymentAmount", @dPaymentAmount, htmlAttributes: new { @class = "form-control", id = "pmtAmount" })</div>
+            </div>
+            <div class="form-group">
+                <label for="pmtStatus" class="control-label col-md-5 maroon">Payment Status</label>
+                <div class="col-md-7">@Html.TextBox("PaymentStatus", @strPaymentStatus, htmlAttributes: new { @class = "form-control", id = "pmtStatus" })</div>
+            </div>
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Traffic Violations", "Index") ::
+    @Html.ActionLink("Process/Create a Traffic Violation", "Create") ::
+    @Html.ActionLink("Edit/Update a Traffic Violation", "PrepareEdit") ::
+    @Html.ActionLink("Delete/Remove a Traffic Violation", "PrepareDelete") ::
+    @Html.ActionLink("Create/Review a Traffic Citation", "Citation")
+</p>

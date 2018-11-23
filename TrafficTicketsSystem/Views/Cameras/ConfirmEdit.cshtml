@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Camera Edit";
+}
+
+<h2 class="maroon common-font text-center bold">Editing Camera Details</h2>
+
+<hr />
+
+@using (Html.BeginForm("Edit", "Cameras", FormMethod.Post))
+{
+    <div class="containment">
+        <div class="small-content common-font">
+            <table>
+                <tr>
+                    <td class="small-text bold maroon">Camera #</td>
+                    <td>@Html.TextBox("CameraNumber", @ViewBag.CameraNumber as string, htmlAttributes: new { @class = "form-control large-text" })</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="maroon bold">Make</td>
+                    <td>@Html.TextBox("Make", @ViewBag.Make as string, htmlAttributes: new { @class = "form-control large-text" })</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="maroon bold">Model</td>
+                    <td>@Html.TextBox("Model", @ViewBag.Model as string, htmlAttributes: new { @class = "form-control large-text" })</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="maroon bold">Location</td>
+                    <td>@Html.TextBox("Location", @ViewBag.Location as string, htmlAttributes: new { @class = "form-control large-text" })</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <label class="col-md-6 control-label"></label>
+        <div class="col-md-6">
+            <input type="submit" value="Save Camera Record" class="btn btn-warning" />
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Cameras", "Index") ::
+    @Html.ActionLink("Create New Camera", "Create") ::
+    @Html.ActionLink("Review Camera Details", "Details") ::
+    @Html.ActionLink("Delete/Remove Camera", "PrepareDelete")
+</p>

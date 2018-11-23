@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TrafficTicketsSystem1.Models.TrafficViolation>
+
+@{
+    ViewBag.Title = "Traffic Violations";
+}
+
+<h2 class="bold maroon common-font text-center">Traffic Violations</h2>
+
+<table class="table table-hover common-font">
+    <tr>
+        <th class="text-center">@Html.DisplayNameFor(model => model.TrafficViolationNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.CameraNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.TagNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.ViolationName)</th>
+        <th>@Html.DisplayNameFor(model => model.ViolationDate)</th>
+        <th>@Html.DisplayNameFor(model => model.ViolationTime)</th>
+        <th>@Html.DisplayNameFor(model => model.PhotoAvailable)</th>
+        <th>@Html.DisplayNameFor(model => model.VideoAvailable)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentDueDate)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentDate)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentAmount)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentStatus)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.TrafficViolationNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.CameraNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.TagNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.ViolationName)</td>
+            <td>@Html.DisplayFor(modelItem => item.ViolationDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.ViolationTime)</td>
+            <td>@Html.DisplayFor(modelItem => item.PhotoAvailable)</td>
+            <td>@Html.DisplayFor(modelItem => item.VideoAvailable)</td>
+            <td>@Html.DisplayFor(modelItem => item.PaymentDueDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.PaymentDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.PaymentAmount)</td>
+            <td>@Html.DisplayFor(modelItem => item.PaymentStatus)</td>
+        </tr>
+    }
+</table>
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Process a New Traffic Violation", "Create") ::
+    @Html.ActionLink("Review a Traffic Violation", "Details") ::
+    @Html.ActionLink("Edit/Update a Traffic Violation", "PrepareEdit") ::
+    @Html.ActionLink("Suspend/Delete/Cancel a Traffic Violation", "PrepareDelete") ::
+    @Html.ActionLink("Prepare/Review a Citation", "Citation")
+</p>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TrafficTicketsSystem1.Models.Camera>
+
+@{
+    ViewBag.Title = "Cameras - Traffic Monitors";
+}
+
+<h2 class="bold maroon common-font text-center">Cameras - Traffic Monitors</h2>
+
+<table class="table table-hover common-font">
+    <tr>
+        <th class="text-center">@Html.DisplayNameFor(model => model.CameraNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Make)</th>
+        <th>@Html.DisplayNameFor(model => model.Model)</th>
+        <th>@Html.DisplayNameFor(model => model.Location)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.CameraNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.Make)</td>
+            <td>@Html.DisplayFor(modelItem => item.Model)</td>
+            <td>@Html.DisplayFor(modelItem => item.Location)</td>
+        </tr>
+    }
+</table>
+<hr />
+<p class="text-center">
+    @Html.ActionLink("Create New Camera", "Create") ::
+    @Html.ActionLink("Edit/Update Camera", "PrepareEdit") ::
+    @Html.ActionLink("Camera Details", "Details") ::
+    @Html.ActionLink("Delete Camera", "PrepareDelete")
+</p>

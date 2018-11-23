@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TrafficTicketsSystem1.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Cars - Vehicles";
+}
+
+<h2 class="bold maroon common-font text-center">Cars - Vehicles</h2>
+
+<table class="table table-hover common-font">
+    <tr>
+        <th class="text-center">@Html.DisplayNameFor(model => model.TagNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.DrvLicNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Make)</th>
+        <th>@Html.DisplayNameFor(model => model.Model)</th>
+        <th>@Html.DisplayNameFor(model => model.VehicleYear)</th>
+        <th>@Html.DisplayNameFor(model => model.Color)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.TagNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.DrvLicNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.Make)</td>
+            <td>@Html.DisplayFor(modelItem => item.Model)</td>
+            <td>@Html.DisplayFor(modelItem => item.VehicleYear)</td>
+            <td>@Html.DisplayFor(modelItem => item.Color)</td>
+        </tr>
+    }
+</table>
+<hr />
+<p class="text-center">
+    @Html.ActionLink("Register New Vehicle", "Create") ::
+    @Html.ActionLink("Edit/Update Vehicle Registration", "PrepareEdit") ::
+    @Html.ActionLink("Vehicle Details", "Details") ::
+    @Html.ActionLink("Delete Vehicle Record", "PrepareDelete")
+</p>

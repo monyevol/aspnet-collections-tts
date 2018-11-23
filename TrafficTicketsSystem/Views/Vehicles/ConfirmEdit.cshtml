@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Vehicle Edit";
+}
+
+<h2 class="common-font bold maroon text-center">Confirm Vehicle Edition</h2>
+
+<hr />
+
+@using (Html.BeginForm("Edit", "Vehicles", FormMethod.Post))
+{
+    <div class="large-content">
+        <div class="form-horizontal common-font">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="tagNbr" class="control-label col-md-5 maroon">Tag #</label>
+                <div class="col-md-7">
+                    @Html.TextBox("TagNumber", @ViewBag.TagNumber as string, htmlAttributes: new { @class = "form-control", id = "tagNbr" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dln" class="control-label col-md-5 maroon">Drv. Lic. #</label>
+                <div class="col-md-7">@Html.TextBox("DrvLicNumber", @ViewBag.DrvLicNumber as string, htmlAttributes: new { @class = "form-control", id = "dln" })</div>
+            </div>
+            <div class="form-group">
+                <label for="make" class="control-label col-md-5 maroon">Make</label>
+                <div class="col-md-7">@Html.TextBox("Make", @ViewBag.Make as string, htmlAttributes: new { @class = "form-control", id = "make" })</div>
+            </div>
+            <div class="form-group">
+                <label for="mdl" class="control-label col-md-5 maroon">Model</label>
+                <div class="col-md-7">@Html.TextBox("Model", @ViewBag.Model as string, htmlAttributes: new { @class = "form-control", id = "mdl" })</div>
+            </div>
+            <div class="form-group">
+                <label for="vYear" class="control-label col-md-5 maroon">Vehicle Year</label>
+                <div class="col-md-7">@Html.TextBox("VehicleYear", @ViewBag.VehicleYear as string, htmlAttributes: new { @class = "form-control", id = "vYear" })</div>
+            </div>
+            <div class="form-group">
+                <label for="clr" class="control-label col-md-5 maroon">Color</label>
+                <div class="col-md-7">@Html.TextBox("Color", @ViewBag.Color as string, htmlAttributes: new { @class = "form-control", id = "clr" })</div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <label class="col-md-6 control-label"></label>
+        <div class="col-md-6">
+            <p><input type="submit" value="Update Vehicle Registration" class="btn btn-warning" /></p>
+        </div>
+    </div>
+}
+
+<hr />
+
+<p class="text-center">
+    @Html.ActionLink("Vehicles", "Index") ::
+    @Html.ActionLink("Register New Vehicle", "Create") ::
+    @Html.ActionLink("Vehicle Details", "Details") ::
+    @Html.ActionLink("Delete Vehicle Record", "PrepareDelete")</p>
